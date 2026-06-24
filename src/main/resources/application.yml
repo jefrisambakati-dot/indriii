@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: kedipin
+  profiles:
+    active: dev
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+    username: postgres.inicyqhzbdwlfuztvknm
+    password: jefri1234444445
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+app:
+  upload:
+    dir: uploads
+  jwt:
+    secret: IniAdalahKunciRahasiaJWTDevelopmentYangSangatPanjangDanAman123!
+    expiration-ms: 3600000
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+app:
+  upload:
+    dir: ${UPLOAD_DIR:uploads}
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}

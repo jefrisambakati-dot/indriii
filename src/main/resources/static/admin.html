@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kedipin – Panel Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="admin-container">
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="header-left">
+      <span class="logo">👁️</span>
+      <div>
+        <h2>Kedipin Admin</h2>
+        <p>Kelola konten edukasi, modul belajar, dan pantau statistik</p>
+      </div>
+    </div>
+    <button class="btn btn-danger-outline" onclick="logout()">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar
+    </button>
+  </header>
+
+  <!-- Statistics Panel -->
+  <section class="stats-row">
+    <div class="stat-box blue">
+      <i class="fa-solid fa-users"></i>
+      <div>
+        <h3 id="stat-users">0</h3>
+        <p>Total Pengguna</p>
+      </div>
+    </div>
+    <div class="stat-box green">
+      <i class="fa-solid fa-book-open"></i>
+      <div>
+        <h3 id="stat-articles">0</h3>
+        <p>Artikel Edukasi</p>
+      </div>
+    </div>
+    <div class="stat-box purple">
+      <i class="fa-solid fa-file-pdf"></i>
+      <div>
+        <h3 id="stat-modules">0</h3>
+        <p>Modul Pembelajaran</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs Navigation -->
+  <nav class="admin-tabs">
+    <button class="tab-btn active" id="tab-art" onclick="switchAdminTab('articles')">
+      <i class="fa-solid fa-newspaper"></i> Kelola Artikel
+    </button>
+    <button class="tab-btn" id="tab-mod" onclick="switchAdminTab('modules')">
+      <i class="fa-solid fa-file-pdf"></i> Kelola Modul PDF
+    </button>
+  </nav>
+
+  <!-- ARTICLES SECTION -->
+  <section id="sec-articles" class="admin-section">
+    <div class="section-header">
+      <h3>📰 Daftar Artikel Kesehatan Mata</h3>
+      <button class="btn btn-primary" onclick="openArticleModal(null)">
+        <i class="fa-solid fa-plus"></i> Tulis Artikel Baru
+      </button>
+    </div>
+    
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="search-article" placeholder="Cari judul artikel..." oninput="filterArticles()">
+    </div>
+
+    <div class="admin-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Judul Artikel</th>
+            <th>Kategori</th>
+            <th>Penulis</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="articles-table-body">
+          <tr>
+            <td colspan="5" style="text-align:center;padding:30px;color:var(--text-light)">Memuat artikel...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MODULES SECTION -->
+  <section id="sec-modules" class="admin-section" style="display:none">
+    <div class="section-header">
+      <h3>📚 Daftar Modul PDF Pembelajaran</h3>
+      <button class="btn btn-primary" onclick="openModuleModal()">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Unggah Modul Baru
+      </button>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Judul Modul</th>
+            <th>Kategori</th>
+            <th>Deskripsi</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="modules-table-body">
+          <tr>
+            <td colspan="4" style="text-align:center;padding:30px;color:var(--text-light)">Memuat modul...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<!-- Modal Edit/Tulis Artikel -->
+<div class="modal-overlay" id="modal-art-edit" style="display:none" onclick="closeArtModal()">
+  <div class="modal-box article-edit-modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeArtModal()"><i class="fa-solid fa-xmark"></i></button>
+    <h3 id="art-modal-title">Tulis Artikel Baru</h3>
+    <div class="auth-err" id="art-err" style="display:none"></div>
+    <input type="hidden" id="art-id">
+    
+    <div class="form-group">
+      <label>Judul Artikel</label>
+      <input type="text" id="inp-art-title" placeholder="Masukkan judul artikel...">
+    </div>
+    
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Kategori</label>
+        <select id="inp-art-cat">
+          <option value="Tips Harian">Tips Harian</option>
+          <option value="Panduan Layar">Panduan Layar</option>
+          <option value="Kesehatan Mata">Kesehatan Mata</option>
+          <option value="Nutrisi">Nutrisi</option>
+          <option value="Penyakit Mata">Penyakit Mata</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Penulis</label>
+        <input type="text" id="inp-art-author" placeholder="Tim EyeGuard">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Ringkasan Singkat (Excerpt / Emoji Pilihan)</label>
+      <input type="text" id="inp-art-thumb" placeholder="Contoh: ⏱️ atau Ringkasan singkat..." value="📄">
+    </div>
+
+    <div class="form-group">
+      <label>Isi Konten Artikel (Mendukung Markdown sederhana seperti bold **teks** dan bullet •)</label>
+      <textarea id="inp-art-content" rows="10" placeholder="Tulis isi artikel di sini..."></textarea>
+    </div>
+
+    <div class="form-group-checkbox" style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <input type="checkbox" id="inp-art-publish" checked style="width:auto">
+      <label for="inp-art-publish" style="margin-bottom:0;font-size:.82rem;font-weight:600;color:var(--text-mid)">Langsung Publish Artikel ini</label>
+    </div>
+
+    <div class="modal-actions" style="display:flex;justify-content:flex-end;gap:10px">
+      <button class="btn btn-outline" onclick="closeArtModal()">Batal</button>
+      <button class="btn btn-primary" id="btn-art-save" onclick="saveArticle()">Simpan Artikel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Upload Modul PDF -->
+<div class="modal-overlay" id="modal-mod-upload" style="display:none" onclick="closeModModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModModal()"><i class="fa-solid fa-xmark"></i></button>
+    <h3>Unggah Modul Pembelajaran PDF</h3>
+    <div class="auth-err" id="mod-err" style="display:none"></div>
+
+    <div class="form-group" style="margin-top:14px">
+      <label>Judul Modul</label>
+      <input type="text" id="inp-mod-title" placeholder="Contoh: Panduan Mengatasi CVS">
+    </div>
+
+    <div class="form-group">
+      <label>Kategori</label>
+      <input type="text" id="inp-mod-cat" placeholder="Contoh: E-Book, Panduan, Brosur" value="E-Book">
+    </div>
+
+    <div class="form-group">
+      <label>Deskripsi Singkat</label>
+      <textarea id="inp-mod-desc" rows="3" placeholder="Deskripsi mengenai isi modul..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Berkas PDF</label>
+      <input type="file" id="inp-mod-file" accept="application/pdf">
+    </div>
+
+    <div class="modal-actions" style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+      <button class="btn btn-outline" onclick="closeModModal()">Batal</button>
+      <button class="btn btn-primary" id="btn-mod-save" onclick="uploadModuleFile()">Unggah Sekarang</button>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

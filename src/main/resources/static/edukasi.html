@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>EyeGuard – Edukasi Mata</title>
+  <meta name="description" content="Baca artikel kesehatan mata, lakukan latihan mata, dan unduh modul edukatif.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="edukasi.css">
+</head>
+<body>
+<div class="app-container">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">👁️</span>
+      <span class="topbar-brand">Edukasi</span>
+    </div>
+  </header>
+
+  <main class="content-area">
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="search-input" placeholder="Cari artikel, latihan, atau modul..." oninput="filterContent()">
+    </div>
+
+    <!-- Tab Filter -->
+    <div class="edu-tabs">
+      <button class="edu-tab active" id="tab-all"     onclick="setTab('all',this)">Semua</button>
+      <button class="edu-tab"        id="tab-artikel"  onclick="setTab('artikel',this)">Artikel</button>
+      <button class="edu-tab"        id="tab-latihan"  onclick="setTab('latihan',this)">Latihan Mata</button>
+      <button class="edu-tab"        id="tab-modul"    onclick="setTab('modul',this)">Modul PDF</button>
+    </div>
+
+    <!-- Articles Section -->
+    <section id="section-artikel">
+      <h3 class="section-label">📰 Artikel Kesehatan Mata</h3>
+      <div class="article-list" id="article-list">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    </section>
+
+    <!-- Exercise Section -->
+    <section id="section-latihan">
+      <h3 class="section-label">🏋️ Latihan Mata</h3>
+      <div class="exercise-grid" id="exercise-grid">
+        <div class="skeleton-card tall"></div>
+        <div class="skeleton-card tall"></div>
+        <div class="skeleton-card tall"></div>
+        <div class="skeleton-card tall"></div>
+      </div>
+    </section>
+
+    <!-- Module Section -->
+    <section id="section-modul">
+      <h3 class="section-label">📚 Modul Pembelajaran</h3>
+      <div class="module-list" id="module-list">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Beranda</span></a>
+    <a href="tracking.html"  class="nav-item"><i class="fa-solid fa-play-circle"></i><span>Tracking</span></a>
+    <a href="statistik.html" class="nav-item"><i class="fa-solid fa-chart-simple"></i><span>Statistik</span></a>
+    <a href="edukasi.html"   class="nav-item active"><i class="fa-solid fa-book-open"></i><span>Edukasi</span></a>
+    <a href="profil.html"    class="nav-item"><i class="fa-regular fa-user"></i><span>Profil</span></a>
+  </nav>
+
+</div>
+
+<!-- Modal Baca Artikel -->
+<div class="modal-overlay" id="modal-article" style="display:none" onclick="closeModal('modal-article')">
+  <div class="modal-box article-modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-article')"><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="modal-article-title" id="modal-article-title"></h2>
+    <p class="modal-meta" id="modal-article-meta"></p>
+    <div class="modal-article-body" id="modal-article-body"></div>
+  </div>
+</div>
+
+<!-- Modal Latihan Mata -->
+<div class="modal-overlay" id="modal-exercise" style="display:none" onclick="closeModal('modal-exercise')">
+  <div class="modal-box exercise-modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-exercise')"><i class="fa-solid fa-xmark"></i></button>
+    <div class="exercise-header">
+      <h2 id="ex-title"></h2>
+      <span class="ex-difficulty" id="ex-difficulty"></span>
+    </div>
+    <p id="ex-description" style="font-size:.85rem;color:var(--text-mid);margin-bottom:4px"></p>
+    <div class="ex-steps" id="ex-steps"></div>
+    <div class="ex-timer" id="ex-timer" style="display:none">
+      <div class="timer-ring-wrap">
+        <svg viewBox="0 0 90 90" class="timer-ring">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+          <circle cx="45" cy="45" r="36" fill="none" stroke="#178d72" stroke-width="8"
+            stroke-dasharray="226" stroke-dashoffset="0" stroke-linecap="round" id="timer-ring-fill"/>
+        </svg>
+        <div class="timer-count" id="timer-count">--</div>
+      </div>
+      <p class="timer-label">detik tersisa</p>
+    </div>
+    <button class="btn-primary mt-12" id="ex-start-btn" onclick="startExercise()">
+      <i class="fa-solid fa-play"></i> Mulai Latihan
+    </button>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script src="edukasi.js"></script>
+</body>
+</html>

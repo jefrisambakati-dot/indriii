@@ -1,0 +1,81 @@
+/* ====================================================
+   profil.css  –  Profil Page Styles  v2
+   ==================================================== */
+
+/* ── Profile Hero ───────────────────────────────────── */
+.profile-hero {
+  background: var(--primary-grad);
+  padding: 36px 20px 28px;
+  text-align: center;
+  color: #fff;
+  margin: 0 -20px;
+  position: relative;
+  overflow: hidden;
+}
+.profile-hero::before {
+  content:''; position:absolute; width:180px; height:180px;
+  background:rgba(255,255,255,.07); border-radius:50%;
+  top:-50px; right:-30px; pointer-events:none;
+}
+.profile-hero::after {
+  content:''; position:absolute; width:120px; height:120px;
+  background:rgba(255,255,255,.05); border-radius:50%;
+  bottom:-20px; left:-20px; pointer-events:none;
+}
+.avatar-ring {
+  width:84px; height:84px; border-radius:50%;
+  background:rgba(255,255,255,.25); padding:4px;
+  margin:0 auto 14px; position:relative; z-index:1;
+}
+.avatar {
+  width:100%; height:100%; border-radius:50%; background:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.2rem; font-weight:800; color:var(--primary);
+}
+.profile-hero h2 {
+  font-size:1.35rem; font-weight:800;
+  position:relative; z-index:1; margin-bottom:4px;
+}
+.profile-email {
+  font-size:0.82rem; opacity:.85; margin-top:4px;
+  position:relative; z-index:1;
+}
+.role-badge {
+  display:inline-block; margin-top:10px; background:rgba(255,255,255,.2);
+  padding:4px 14px; border-radius:20px; font-size:0.75rem; font-weight:700;
+  position:relative; z-index:1;
+}
+
+/* ── Stats Strip ────────────────────────────────────── */
+.profile-stats {
+  display:flex; align-items:center; justify-content:space-around;
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius-md);
+  padding:16px; margin:16px 0 0; box-shadow:var(--shadow-sm);
+}
+.ps-item { text-align:center; flex:1; }
+.ps-item span { font-size:1.15rem; font-weight:800; color:var(--text); display:block; }
+.ps-item small { font-size:0.68rem; color:var(--text-light); }
+.ps-divider { width:1px; height:36px; background:var(--border); }
+
+/* ── Form Section ───────────────────────────────────── */
+.form-section {
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius-md);
+  padding:16px; margin-top:16px; box-shadow:var(--shadow-sm);
+}
+.form-section h3 { font-size:0.95rem; font-weight:700; margin-bottom:14px; }
+
+/* ── Account Info ───────────────────────────────────── */
+.account-info-list { display:flex; flex-direction:column; gap:10px; }
+.account-info-item {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 14px; background:var(--bg); border-radius:var(--radius-sm);
+}
+.account-info-label { font-size:0.8rem; color:var(--text-mid); font-weight:500; }
+.account-info-value { font-size:0.85rem; font-weight:700; color:var(--text); }
+
+/* ── Danger Zone ────────────────────────────────────── */
+.danger-zone {
+  background:#fff; border:1.5px solid #fed7d7; border-radius:var(--radius-md);
+  padding:16px; margin-top:16px;
+}
+.danger-zone h3 { color:var(--danger); font-size:0.9rem; font-weight:700; margin-bottom:12px; }

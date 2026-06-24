@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kedipin – Dashboard</title>
+  <meta name="description" content="Pantau kesehatan mata, screen time, dan skor kesehatan harian Anda dengan Kedipin.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+<div class="app-container">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">👁️</span>
+      <span class="topbar-brand">Kedipin</span>
+    </div>
+    <button class="icon-btn notif-btn" id="notif-btn" title="Notifikasi">
+      <i class="fa-regular fa-bell"></i>
+      <span class="notif-dot" id="notif-dot" style="display:none"></span>
+    </button>
+  </header>
+  
+  <!-- Notification Panel -->
+  <div class="notif-panel" id="notif-panel" style="display:none" onclick="event.stopPropagation()">
+    <div class="notif-panel-header">
+      <h4>🔔 Notifikasi</h4>
+      <button class="notif-read-btn" onclick="clearAndCloseNotifs()">Tandai dibaca</button>
+    </div>
+    <div class="notif-panel-body" id="notif-panel-body">
+      <div style="padding:20px;text-align:center;color:var(--text-light);font-size:.8rem">Belum ada notifikasi</div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <main class="content-area" id="main-content">
+
+    <!-- Greeting -->
+    <section class="greeting">
+      <div>
+        <h1 id="user-greeting" class="greeting-title">Hai, Kawan 👋</h1>
+        <p class="greeting-sub">Jaga kesehatan mata mulai dari sekarang!</p>
+      </div>
+      <div class="health-badge" id="health-badge">
+        <span id="health-score">--</span>
+        <small>Skor</small>
+      </div>
+    </section>
+
+    <!-- Screen Time Hero Card -->
+    <section class="screen-time-card">
+      <div class="st-info">
+        <p class="st-label">Screen time hari ini</p>
+        <h2 class="st-value" id="screen-time-val">-- Jam -- Menit</h2>
+        <p class="st-trend" id="screen-time-trend">
+          <i class="fa-solid fa-arrow-up"></i> --% dari kemarin
+        </p>
+      </div>
+      <div class="st-art">
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+          <circle cx="45" cy="45" r="40" fill="rgba(255,255,255,0.15)"/>
+          <text x="45" y="55" text-anchor="middle" font-size="36">📱</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Target Ring Card -->
+    <div class="target-progress-card">
+      <div class="tp-ring-wrap">
+        <svg class="tp-ring" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#178d72" stroke-width="8"
+            stroke-dasharray="201" stroke-dashoffset="201"
+            stroke-linecap="round" id="ring-fill"
+            style="transition:stroke-dashoffset 1.2s ease"/>
+        </svg>
+        <div class="tp-ring-text">
+          <span id="target-pct">0%</span>
+          <small>Target</small>
+        </div>
+      </div>
+      <div class="tp-info">
+        <p class="tp-title">Target Harian</p>
+        <p class="tp-detail" id="target-detail">-- / -- menit</p>
+        <p class="tp-hint">Aturan 20-20-20: Setiap 20 menit, lihat 6m selama 20 detik.</p>
+      </div>
+    </div>
+
+    <!-- 2×2 Stats Grid -->
+    <section class="stats-grid">
+      <div class="stat-card" onclick="window.location.href='statistik.html'">
+        <div class="stat-icon-wrap green"><i class="fa-solid fa-ruler"></i></div>
+        <p class="stat-title">Jarak Layar</p>
+        <p class="stat-badge" id="jarak-badge">--</p>
+        <h3 class="stat-val" id="jarak-val">-- cm</h3>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap purple"><i class="fa-solid fa-mug-hot"></i></div>
+        <p class="stat-title">Istirahat Mata</p>
+        <p class="stat-badge" id="rest-badge">Hari ini</p>
+        <h3 class="stat-val" id="istirahat-val">--</h3>
+      </div>
+      <div class="stat-card" onclick="window.location.href='statistik.html'">
+        <div class="stat-icon-wrap red"><i class="fa-solid fa-heart-pulse"></i></div>
+        <p class="stat-title">Keluhan Mata</p>
+        <p class="stat-badge" id="keluhan-badge">Hari ini</p>
+        <h3 class="stat-val" id="keluhan-val">--</h3>
+      </div>
+      <div class="stat-card" onclick="window.location.href='edukasi.html'">
+        <div class="stat-icon-wrap orange"><i class="fa-solid fa-dumbbell"></i></div>
+        <p class="stat-title">Latihan Mata</p>
+        <p class="stat-badge">Coba sekarang</p>
+        <h3 class="stat-val">Senam 👁️</h3>
+      </div>
+    </section>
+
+    <!-- Weekly Bar Chart -->
+    <section class="chart-section">
+      <div class="chart-header">
+        <h3>Aktivitas Mingguan</h3>
+        <span class="chart-unit">Menit</span>
+      </div>
+      <div class="bar-chart" id="bar-chart"></div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+      <h3>⚡ Aksi Cepat</h3>
+      <div class="qa-grid">
+        <button class="qa-btn" onclick="openLogDistance()">
+          <i class="fa-solid fa-ruler"></i><span>Log Jarak</span>
+        </button>
+        <button class="qa-btn" onclick="openLogComplaint()">
+          <i class="fa-solid fa-triangle-exclamation"></i><span>Log Keluhan</span>
+        </button>
+        <button class="qa-btn" onclick="openLogScreenTime()">
+          <i class="fa-solid fa-clock"></i><span>Update Harian</span>
+        </button>
+        <button class="qa-btn" onclick="window.location.href='edukasi.html'">
+          <i class="fa-solid fa-graduation-cap"></i><span>Edukasi</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item active" id="nav-beranda">
+      <i class="fa-solid fa-house"></i><span>Beranda</span>
+    </a>
+    <a href="tracking.html" class="nav-item" id="nav-tracking">
+      <i class="fa-solid fa-play-circle"></i><span>Tracking</span>
+    </a>
+    <a href="statistik.html" class="nav-item" id="nav-statistik">
+      <i class="fa-solid fa-chart-simple"></i><span>Statistik</span>
+    </a>
+    <a href="edukasi.html" class="nav-item" id="nav-edukasi">
+      <i class="fa-solid fa-book-open"></i><span>Edukasi</span>
+    </a>
+    <a href="profil.html" class="nav-item" id="nav-profil">
+      <i class="fa-regular fa-user"></i><span>Profil</span>
+    </a>
+  </nav>
+
+</div>
+
+<!-- Modal Log Jarak Layar -->
+<div class="modal-overlay" id="modal-jarak" style="display:none" onclick="closeModal('modal-jarak')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-jarak')"><i class="fa-solid fa-xmark"></i></button>
+    <h3><i class="fa-solid fa-ruler"></i> Log Jarak Layar</h3>
+    <p style="font-size:.8rem;color:var(--text-light);margin-bottom:14px">Ukur jarak antara mata dan layar perangkat Anda.</p>
+    <div class="auth-err" id="dist-err" style="display:none"></div>
+    <div class="auth-success" id="dist-success" style="display:none"></div>
+    <div class="form-group">
+      <label>Jarak saat ini (cm)</label>
+      <input type="number" id="inp-jarak" placeholder="Contoh: 40" min="1" max="200">
+    </div>
+    <p style="font-size:.75rem;color:var(--text-light)">💡 Jarak aman: ≥ 30 cm</p>
+    <button class="btn-primary mt-12" onclick="submitLogDistance()">Simpan Log Jarak</button>
+  </div>
+</div>
+
+<!-- Modal Log Keluhan Mata -->
+<div class="modal-overlay" id="modal-keluhan" style="display:none" onclick="closeModal('modal-keluhan')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-keluhan')"><i class="fa-solid fa-xmark"></i></button>
+    <h3><i class="fa-solid fa-heart-pulse"></i> Log Keluhan Mata</h3>
+    <p style="font-size:.8rem;color:var(--text-light);margin-bottom:14px">Catat keluhan mata yang kamu rasakan sekarang.</p>
+    <div class="auth-err" id="keluhan-err" style="display:none"></div>
+    <div class="auth-success" id="keluhan-success" style="display:none"></div>
+    <div class="form-group">
+      <label>Jenis Keluhan</label>
+      <select id="inp-complaint">
+        <option value="Mata kering">Mata kering</option>
+        <option value="Mata lelah">Mata lelah</option>
+        <option value="Mata perih">Mata perih</option>
+        <option value="Pandangan kabur">Pandangan kabur</option>
+        <option value="Sakit kepala">Sakit kepala</option>
+        <option value="Mata berair">Mata berair</option>
+        <option value="Sensitif cahaya">Sensitif cahaya</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tingkat keparahan (1 = ringan, 5 = berat)</label>
+      <input type="number" id="inp-severity" value="3" min="1" max="5">
+    </div>
+    <div class="form-group">
+      <label>Catatan tambahan (opsional)</label>
+      <textarea id="inp-notes" placeholder="Contoh: Setelah 3 jam nonton film..."></textarea>
+    </div>
+    <button class="btn-primary" onclick="submitLogComplaint()">Simpan Keluhan</button>
+  </div>
+</div>
+
+<!-- Modal Update Harian -->
+<div class="modal-overlay" id="modal-screentime" style="display:none" onclick="closeModal('modal-screentime')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-screentime')"><i class="fa-solid fa-xmark"></i></button>
+    <h3><i class="fa-solid fa-clock"></i> Update Data Harian</h3>
+    <p style="font-size:.8rem;color:var(--text-light);margin-bottom:14px">Catat ringkasan aktivitas mata hari ini.</p>
+    <div class="auth-err" id="daily-err" style="display:none"></div>
+    <div class="auth-success" id="daily-success" style="display:none"></div>
+    <div class="form-group">
+      <label>Tanggal</label>
+      <input type="date" id="inp-date">
+    </div>
+    <div class="form-group">
+      <label>Total screen time hari ini (menit)</label>
+      <input type="number" id="inp-screentime" placeholder="Contoh: 270" min="0">
+    </div>
+    <div class="form-group">
+      <label>Jumlah sesi istirahat</label>
+      <input type="number" id="inp-breaks" placeholder="Contoh: 7" min="0">
+    </div>
+    <div class="form-group">
+      <label>Rata-rata jarak layar (cm, opsional)</label>
+      <input type="number" id="inp-avg-dist" placeholder="Contoh: 40" min="1" max="200">
+    </div>
+    <div class="form-group">
+      <label>Kondisi mata hari ini (Mood)</label>
+      <select id="inp-mood">
+        <option value="">-- Pilih kondisi --</option>
+        <option value="Sangat Baik">😄 Sangat Baik</option>
+        <option value="Baik">🙂 Baik</option>
+        <option value="Biasa">😐 Biasa</option>
+        <option value="Lelah">😔 Lelah</option>
+        <option value="Sangat Lelah">😞 Sangat Lelah</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Catatan hari ini (opsional)</label>
+      <textarea id="inp-daily-notes" placeholder="Contoh: Banyak meeting online hari ini..."></textarea>
+    </div>
+    <button class="btn-primary" onclick="submitLogScreenTime()">Simpan Data Harian</button>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+/target/
+/apache-maven-3.9.16/
+.idea/
+.settings/
+.classpath
+.project
+*.log
+.DS_Store

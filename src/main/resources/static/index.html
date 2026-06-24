@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>EyeGuard – Jaga Kesehatan Mata</title>
+  <meta name="description" content="EyeGuard membantu kamu memantau kesehatan mata, mencatat aktivitas layar, dan belajar latihan mata.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="app-container auth-bg">
+
+  <!-- Auth Screen -->
+  <div id="auth-screen">
+    <div class="auth-hero">
+      <div class="auth-logo-wrap">
+        <div class="auth-logo-icon">👁️</div>
+        <h1 class="auth-title">EyeGuard</h1>
+        <p class="auth-sub">Kesehatan mata dimulai dari kebiasaan baik</p>
+      </div>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" id="tab-login">Masuk</button>
+        <button class="auth-tab" data-tab="register" id="tab-register">Daftar</button>
+        <div class="tab-indicator" id="tab-indicator"></div>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="login-panel">
+        <div class="auth-err" id="login-err" style="display:none"></div>
+        <div class="form-group">
+          <label for="form-login-email"><i class="fa-regular fa-envelope"></i> Email</label>
+          <input id="form-login-email" type="email" placeholder="email@kamu.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="form-login-pass"><i class="fa-solid fa-lock"></i> Password</label>
+          <div class="input-icon-wrap">
+            <input id="form-login-pass" type="password" placeholder="Password kamu" autocomplete="current-password">
+            <button class="toggle-pass" onclick="togglePass('form-login-pass',this)"><i class="fa-regular fa-eye"></i></button>
+          </div>
+        </div>
+        <button id="btn-login" class="btn-primary">Masuk</button>
+        <p class="auth-footer-txt">Belum punya akun? <a href="#" onclick="switchTab('register')">Daftar sekarang</a></p>
+      </div>
+
+      <!-- REGISTER -->
+      <div id="register-panel" style="display:none">
+        <div class="auth-err" id="register-err" style="display:none"></div>
+        <div class="auth-success" id="register-success" style="display:none"></div>
+        <div class="form-group">
+          <label for="form-reg-name"><i class="fa-regular fa-user"></i> Nama Lengkap</label>
+          <input id="form-reg-name" type="text" placeholder="Nama lengkap kamu">
+        </div>
+        <div class="form-group">
+          <label for="form-reg-email"><i class="fa-regular fa-envelope"></i> Email</label>
+          <input id="form-reg-email" type="email" placeholder="email@kamu.com">
+        </div>
+        <div class="form-group">
+          <label for="form-reg-age"><i class="fa-solid fa-cake-candles"></i> Umur</label>
+          <input id="form-reg-age" type="number" placeholder="Contoh: 22" min="5" max="100">
+        </div>
+        <div class="form-group">
+          <label for="form-reg-gender"><i class="fa-solid fa-venus-mars"></i> Jenis Kelamin</label>
+          <select id="form-reg-gender">
+            <option value="">Pilih jenis kelamin</option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="form-reg-pass"><i class="fa-solid fa-lock"></i> Password</label>
+          <div class="input-icon-wrap">
+            <input id="form-reg-pass" type="password" placeholder="Min. 6 karakter">
+            <button class="toggle-pass" onclick="togglePass('form-reg-pass',this)"><i class="fa-regular fa-eye"></i></button>
+          </div>
+        </div>
+        <button id="btn-register" class="btn-primary">Buat Akun</button>
+        <p class="auth-footer-txt">Sudah punya akun? <a href="#" onclick="switchTab('login')">Masuk</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+/* ====================================================
+   history.css  –  History Page Styles  v2
+   ==================================================== */
+
+/* ── Summary Strip ───────────────────────────────── */
+.hist-summary-strip {
+    display:flex; align-items:center; justify-content:space-around;
+    background:#fff; border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:14px 10px;
+    box-shadow:var(--shadow-sm);
+}
+.hs-item {
+    display:flex; align-items:center; gap:10px; flex:1;
+    justify-content:center;
+}
+.hs-item i { font-size:1.2rem; }
+.hs-val { font-size:1.05rem; font-weight:800; color:var(--text); margin:0; }
+.hs-lbl { font-size:.68rem; color:var(--text-light); font-weight:500; margin:0; }
+.hs-divider { width:1px; height:36px; background:var(--border); }
+
+/* ── Tabs ────────────────────────────────────────── */
+.history-tabs {
+    display:flex; gap:0; background:var(--bg);
+    border-radius:var(--radius-sm);
+    border:1px solid var(--border); overflow:hidden;
+}
+.h-tab {
+    flex:1; padding:10px 6px;
+    background:transparent; border:none;
+    font-size:.78rem; font-weight:600; color:var(--text-mid);
+    cursor:pointer; transition:all .2s;
+    display:flex; align-items:center; justify-content:center; gap:5px;
+    font-family:inherit;
+}
+.h-tab:hover { background:rgba(23,141,114,.06); color:var(--primary); }
+.h-tab.active {
+    background:var(--primary); color:#fff;
+}
+.h-tab i { font-size:.8rem; }
+
+/* ── History List Container ──────────────────────── */
+.history-list { margin-top:12px; display:flex; flex-direction:column; gap:10px; }
+
+/* ── Distance / Complaint Item ───────────────────── */
+.hist-item {
+    display:flex; align-items:center; justify-content:space-between;
+    background:#fff; border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:14px;
+    box-shadow:var(--shadow-sm); gap:10px;
+    transition:transform .15s, box-shadow .15s;
+}
+.hist-item:hover { transform:translateY(-1px); box-shadow:var(--shadow-md); }
+
+.hist-left { display:flex; align-items:center; gap:12px; flex:1; min-width:0; }
+
+.hist-icon {
+    width:38px; height:38px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1rem; flex-shrink:0;
+}
+
+.hist-title {
+    font-size:.88rem; font-weight:700; color:var(--text);
+    margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.hist-sub  { font-size:.72rem; color:var(--text-light); margin:0; }
+.hist-note {
+    font-size:.72rem; color:var(--text-mid); margin:4px 0 0;
+    font-style:italic;
+}
+
+/* ── Daily Item ──────────────────────────────────── */
+.hist-daily-item {
+    background:#fff; border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:14px;
+    box-shadow:var(--shadow-sm);
+    transition:transform .15s, box-shadow .15s;
+}
+.hist-daily-item:hover { transform:translateY(-1px); box-shadow:var(--shadow-md); }
+
+.hd-top {
+    display:flex; justify-content:space-between;
+    align-items:flex-start; margin-bottom:10px;
+}
+.hd-date-col { display:flex; flex-direction:column; gap:3px; }
+.hd-date  { font-size:.82rem; font-weight:700; color:var(--text); }
+.hd-mood  { font-size:.75rem; color:var(--text-mid); }
+.hd-score {
+    font-size:1.1rem; font-weight:800;
+    padding:6px 12px; border-radius:var(--radius-sm);
+    display:flex; align-items:baseline; gap:2px;
+    flex-shrink:0;
+}
+.hd-score small { font-size:.6rem; font-weight:600; }
+
+.hd-stats {
+    display:flex; gap:12px; flex-wrap:wrap;
+}
+.hd-stat {
+    display:flex; align-items:center; gap:5px;
+    font-size:.78rem; color:var(--text-mid); font-weight:500;
+}
+.hd-stat i { font-size:.75rem; }
+
+/* ── Empty State override for history ───────────── */
+.history-list .empty-state {
+    background:#fff; border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:32px 20px;
+    box-shadow:var(--shadow-sm);
+}

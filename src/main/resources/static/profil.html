@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kedipin – Profil</title>
+  <meta name="description" content="Kelola profil, pengaturan target layar, dan informasi akun Kedipin Anda.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="profil.css">
+</head>
+<body>
+<div class="app-container">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">👁️</span>
+      <span class="topbar-brand">Kedipin</span>
+    </div>
+    <button class="icon-btn danger-btn" onclick="logout()" title="Keluar">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </header>
+
+  <main class="content-area">
+
+    <!-- Profile Hero -->
+    <div class="profile-hero">
+      <div class="avatar-ring">
+        <div class="avatar" id="profile-avatar">?</div>
+      </div>
+      <h2 id="profile-name">Memuat...</h2>
+      <p id="profile-email" class="profile-email">--</p>
+      <span class="role-badge" id="profile-role">USER</span>
+    </div>
+
+    <!-- Stats Strip: Age | Gender | Target -->
+    <div class="profile-stats">
+      <div class="ps-item">
+        <span id="ps-age">--</span>
+        <small>Tahun</small>
+      </div>
+      <div class="ps-divider"></div>
+      <div class="ps-item">
+        <span id="ps-gender">--</span>
+        <small>Gender</small>
+      </div>
+      <div class="ps-divider"></div>
+      <div class="ps-item">
+        <span id="ps-target">--</span>
+        <small>Target (mnt)</small>
+      </div>
+    </div>
+
+    <!-- Account Info (read-only) -->
+    <section class="form-section">
+      <h3>ℹ️ Info Akun</h3>
+      <div class="account-info-list">
+        <div class="account-info-item">
+          <span class="account-info-label"><i class="fa-regular fa-envelope"></i> Email</span>
+          <span class="account-info-value" id="info-email">--</span>
+        </div>
+        <div class="account-info-item">
+          <span class="account-info-label"><i class="fa-solid fa-briefcase"></i> Pekerjaan</span>
+          <span class="account-info-value" id="info-occ">--</span>
+        </div>
+        <div class="account-info-item">
+          <span class="account-info-label"><i class="fa-solid fa-calendar-plus"></i> Bergabung</span>
+          <span class="account-info-value" id="info-joined">--</span>
+        </div>
+        <div class="account-info-item">
+          <span class="account-info-label"><i class="fa-solid fa-circle-check"></i> Status</span>
+          <span class="account-info-value" id="info-status" style="color:var(--primary)">Aktif</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Edit Form -->
+    <section class="form-section">
+      <h3>✏️ Edit Profil</h3>
+      <div class="auth-err" id="profile-err" style="display:none"></div>
+      <div class="auth-success" id="profile-success" style="display:none"></div>
+      <div class="form-group">
+        <label><i class="fa-regular fa-user"></i> Nama Lengkap</label>
+        <input type="text" id="edit-name" placeholder="Nama lengkap kamu">
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-cake-candles"></i> Umur</label>
+        <input type="number" id="edit-age" placeholder="Contoh: 22" min="5" max="100">
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-venus-mars"></i> Jenis Kelamin</label>
+        <select id="edit-gender">
+          <option value="">-- Pilih --</option>
+          <option value="Laki-laki">Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-briefcase"></i> Pekerjaan</label>
+        <input type="text" id="edit-occupation" placeholder="Contoh: Mahasiswa, Karyawan">
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-clock"></i> Target Layar Harian (menit)</label>
+        <input type="number" id="edit-target" placeholder="Contoh: 240" min="30" max="1440">
+        <small style="color:var(--text-light);font-size:.75rem;margin-top:4px;display:block">Rekomendasi: 120–240 menit (2–4 jam)</small>
+      </div>
+      <button class="btn-primary" onclick="saveProfile()" id="btn-save">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
+      </button>
+    </section>
+
+    <!-- Danger Zone -->
+    <section class="danger-zone">
+      <h3>⚠️ Zona Bahaya</h3>
+      <button class="btn-danger" onclick="logout()">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar dari Akun
+      </button>
+    </section>
+
+    <div style="height:16px"></div>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Beranda</span></a>
+    <a href="tracking.html" class="nav-item"><i class="fa-solid fa-play-circle"></i><span>Tracking</span></a>
+    <a href="statistik.html" class="nav-item"><i class="fa-solid fa-chart-simple"></i><span>Statistik</span></a>
+    <a href="edukasi.html"   class="nav-item"><i class="fa-solid fa-book-open"></i><span>Edukasi</span></a>
+    <a href="profil.html"    class="nav-item active"><i class="fa-regular fa-user"></i><span>Profil</span></a>
+  </nav>
+
+</div>
+<script src="shared.js"></script>
+<script src="profil.js"></script>
+</body>
+</html>

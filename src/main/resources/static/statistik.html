@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kedipin – Statistik</title>
+  <meta name="description" content="Lihat statistik penggunaan layar dan kesehatan mata Anda secara menyeluruh dengan Kedipin.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="statistik.css">
+</head>
+<body>
+<div class="app-container">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">👁️</span>
+      <span class="topbar-brand">Kedipin</span>
+    </div>
+  </header>
+
+  <main class="content-area">
+
+    <!-- 4 Summary Cards -->
+    <section class="summary-strip" style="flex-wrap:wrap">
+      <div class="sum-card blue" style="min-width:calc(50% - 5px);flex-basis:calc(50% - 5px)">
+        <i class="fa-solid fa-clock"></i>
+        <div>
+          <p class="sum-val" id="stat-total-time">--</p>
+          <p class="sum-label">Screen Time Hari Ini</p>
+        </div>
+      </div>
+      <div class="sum-card green" style="min-width:calc(50% - 5px);flex-basis:calc(50% - 5px)">
+        <i class="fa-solid fa-ruler"></i>
+        <div>
+          <p class="sum-val" id="stat-avg-dist">-- cm</p>
+          <p class="sum-label">Avg Jarak Layar</p>
+        </div>
+      </div>
+      <div class="sum-card orange" style="min-width:calc(50% - 5px);flex-basis:calc(50% - 5px);margin-top:10px">
+        <i class="fa-solid fa-heart-pulse"></i>
+        <div>
+          <p class="sum-val" id="stat-total-complaints">--</p>
+          <p class="sum-label">Total Keluhan</p>
+        </div>
+      </div>
+      <div class="sum-card purple" style="min-width:calc(50% - 5px);flex-basis:calc(50% - 5px);margin-top:10px">
+        <i class="fa-solid fa-mug-hot"></i>
+        <div>
+          <p class="sum-val" id="stat-total-breaks">--</p>
+          <p class="sum-label">Istirahat Hari Ini</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Weekly Screen Time Chart -->
+    <section class="chart-card">
+      <div class="chart-header">
+        <h3>Screen Time 7 Hari Terakhir</h3>
+        <span class="chart-unit">Menit/hari</span>
+      </div>
+      <div class="bar-chart tall" id="stat-bar-chart"></div>
+    </section>
+
+    <!-- Health Score Trend -->
+    <section class="chart-card">
+      <div class="chart-header">
+        <h3>Tren Skor Kesehatan Mata</h3>
+        <span class="chart-unit">7 Hari</span>
+      </div>
+      <div class="bar-chart tall" id="health-bar-chart"></div>
+    </section>
+
+    <!-- Daily History -->
+    <section class="chart-card">
+      <div class="chart-header">
+        <h3>Riwayat Harian</h3>
+        <span class="chart-unit">Detail per hari</span>
+      </div>
+      <div class="daily-list" id="daily-list">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    </section>
+
+    <!-- Distance Log -->
+    <section class="chart-card">
+      <div class="chart-header">
+        <h3>Riwayat Jarak Layar</h3>
+        <span class="chart-unit">10 terakhir</span>
+      </div>
+      <div class="distance-list" id="distance-list">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    </section>
+
+    <!-- Complaint Log -->
+    <section class="chart-card">
+      <div class="chart-header">
+        <h3>Riwayat Keluhan Mata</h3>
+        <span class="chart-unit">10 terakhir</span>
+      </div>
+      <div class="complaint-list" id="complaint-list">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item" id="nav-beranda">
+      <i class="fa-solid fa-house"></i><span>Beranda</span>
+    </a>
+    <a href="tracking.html" class="nav-item" id="nav-tracking">
+      <i class="fa-solid fa-play-circle"></i><span>Tracking</span>
+    </a>
+    <a href="statistik.html" class="nav-item active" id="nav-statistik">
+      <i class="fa-solid fa-chart-simple"></i><span>Statistik</span>
+    </a>
+    <a href="edukasi.html" class="nav-item" id="nav-edukasi">
+      <i class="fa-solid fa-book-open"></i><span>Edukasi</span>
+    </a>
+    <a href="profil.html" class="nav-item" id="nav-profil">
+      <i class="fa-regular fa-user"></i><span>Profil</span>
+    </a>
+  </nav>
+
+</div>
+<script src="shared.js"></script>
+<script src="statistik.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kedipin – Riwayat</title>
+  <meta name="description" content="Riwayat lengkap jarak layar, keluhan mata, dan status harian Anda.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="history.css">
+</head>
+<body>
+<div class="app-container">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="icon-btn" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></button>
+      <span class="topbar-brand">Riwayat Data</span>
+    </div>
+    <button class="icon-btn" onclick="loadTab(currentTab)" title="Refresh">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
+  </header>
+
+  <main class="content-area">
+
+    <!-- Summary strip -->
+    <div class="hist-summary-strip mt-12">
+      <div class="hs-item">
+        <i class="fa-solid fa-ruler" style="color:var(--primary)"></i>
+        <div>
+          <p class="hs-val" id="hs-dist">--</p>
+          <p class="hs-lbl">Log Jarak</p>
+        </div>
+      </div>
+      <div class="hs-divider"></div>
+      <div class="hs-item">
+        <i class="fa-solid fa-triangle-exclamation" style="color:var(--danger)"></i>
+        <div>
+          <p class="hs-val" id="hs-cmp">--</p>
+          <p class="hs-lbl">Keluhan</p>
+        </div>
+      </div>
+      <div class="hs-divider"></div>
+      <div class="hs-item">
+        <i class="fa-solid fa-calendar-check" style="color:var(--blue)"></i>
+        <div>
+          <p class="hs-val" id="hs-daily">--</p>
+          <p class="hs-lbl">Hari Dicatat</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="history-tabs mt-12">
+      <button class="h-tab active" id="htab-distance"  onclick="setHistoryTab('distance', this)">
+        <i class="fa-solid fa-ruler"></i> Jarak
+      </button>
+      <button class="h-tab" id="htab-complaint" onclick="setHistoryTab('complaint', this)">
+        <i class="fa-solid fa-heart-pulse"></i> Keluhan
+      </button>
+      <button class="h-tab" id="htab-daily"     onclick="setHistoryTab('daily', this)">
+        <i class="fa-solid fa-calendar-days"></i> Harian
+      </button>
+    </div>
+
+    <!-- List containers -->
+    <div id="hist-distance" class="history-list"></div>
+    <div id="hist-complaint" class="history-list" style="display:none"></div>
+    <div id="hist-daily"    class="history-list" style="display:none"></div>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Beranda</span></a>
+    <a href="tracking.html"  class="nav-item"><i class="fa-solid fa-play-circle"></i><span>Tracking</span></a>
+    <a href="statistik.html" class="nav-item"><i class="fa-solid fa-chart-simple"></i><span>Statistik</span></a>
+    <a href="edukasi.html"   class="nav-item"><i class="fa-solid fa-book-open"></i><span>Edukasi</span></a>
+    <a href="profil.html"    class="nav-item"><i class="fa-regular fa-user"></i><span>Profil</span></a>
+  </nav>
+
+</div>
+<script src="shared.js"></script>
+<script src="history.js"></script>
+<script>
+// Load summary counts
+(async () => {
+    const [dRes, cRes, dailyRes] = await Promise.all([
+        apiFetch('/api/user/tracking/distance'),
+        apiFetch('/api/user/tracking/complaint'),
+        apiFetch('/api/user/tracking/daily')
+    ]);
+    const d = dRes && dRes.ok ? (await dRes.json()).data : DUMMY_DISTANCES;
+    const c = cRes && cRes.ok ? (await cRes.json()).data : DUMMY_COMPLAINTS;
+    const dl= dailyRes && dailyRes.ok ? (await dailyRes.json()).data : DUMMY_DAILY;
+    setText('hs-dist',  (d  || []).length + ' log');
+    setText('hs-cmp',   (c  || []).length + ' kasus');
+    setText('hs-daily', (dl || []).length + ' hari');
+})();
+</script>
+</body>
+</html>

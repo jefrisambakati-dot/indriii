@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kedipin – Tracking Real-Time</title>
+  <meta name="description" content="Pantau jarak layar, catat keluhan mata, dan lacak screen time secara real-time.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="tracking.css">
+</head>
+<body>
+<div class="app-container">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">👁️</span>
+      <span class="topbar-brand">Kedipin Tracking</span>
+    </div>
+    <span class="trk-live-badge" id="live-badge" style="display:none">
+      <span class="live-dot"></span>LIVE
+    </span>
+  </header>
+
+  <main class="content-area" style="padding-bottom:110px">
+
+    <div class="greeting">
+      <div>
+        <h2 class="greeting-title">Analisis Layar</h2>
+        <p class="greeting-sub">Pantau kebiasaan penggunaan layar secara real-time</p>
+      </div>
+    </div>
+
+    <!-- ===== TRACKING CONTROL CARD ===== -->
+    <div class="tracking-control-card mt-12">
+      <div class="tracking-live-card" id="live-card">
+        <div class="tracking-header">
+          <div class="tracking-status-indicator">
+            <span class="status-dot"></span>
+            <span id="tracking-status">Belum dimulai</span>
+          </div>
+          <div class="tracking-timer-display">
+            <span id="tracking-timer">00:00:00</span>
+          </div>
+        </div>
+
+        <!-- Break counter (muncul saat aktif) -->
+        <div id="break-row" style="display:none; justify-content:space-between; align-items:center">
+          <span style="font-size:.82rem;color:var(--text-mid)">
+            <i class="fa-solid fa-mug-hot" style="color:var(--purple)"></i>
+            Sesi istirahat: <strong id="break-count">0x</strong>
+          </span>
+          <button id="breakBtn" class="btn-break">
+            <i class="fa-solid fa-mug-hot"></i> Istirahat
+          </button>
+        </div>
+
+        <div class="tracking-actions">
+          <button id="startTrackingBtn" class="btn-primary btn-tracking">
+            <i class="fa-solid fa-play"></i> Mulai Tracking
+          </button>
+          <button id="stopTrackingBtn" class="btn-danger btn-tracking" disabled style="display:none">
+            <i class="fa-solid fa-stop"></i> Selesai
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DISTANCE CARD ===== -->
+    <div class="tracking-distance-card mt-12">
+      <div class="distance-header">
+        <h4>📏 Jarak Layar (Real-Time)</h4>
+        <span style="font-size:.72rem;color:var(--text-light)">Update otomatis tiap 30 detik saat tracking aktif</span>
+      </div>
+      <div class="distance-content">
+        <div class="distance-visual">
+          <i class="fa-solid fa-ruler"></i>
+        </div>
+        <div class="distance-info">
+          <p class="distance-value" id="distanceValue">-- cm</p>
+          <p class="distance-status" id="distanceStatus">Mulai tracking untuk memantau</p>
+        </div>
+      </div>
+      <!-- Manual log jarak -->
+      <div class="manual-dist-row">
+        <input type="number" id="manualDistance" placeholder="Ukur jarak (cm)" min="1" max="300">
+        <button id="logDistanceBtn" class="btn-dist-log">
+          <i class="fa-solid fa-plus"></i> Log
+        </button>
+      </div>
+      <p style="font-size:.72rem;color:var(--text-light);margin-top:6px">💡 Jarak aman: ≥ 30 cm dari layar</p>
+    </div>
+
+    <!-- ===== COMPLAINT CARD ===== -->
+    <div class="tracking-complaint-card mt-12">
+      <div class="complaint-header">
+        <h4>😖 Lapor Keluhan Mata</h4>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <select id="complaintSelect" class="complaint-select">
+          <option value="">-- Pilih Keluhan --</option>
+          <option value="Mata lelah">😴 Mata lelah</option>
+          <option value="Mata kering">💧 Mata kering</option>
+          <option value="Mata perih">🔥 Mata perih</option>
+          <option value="Mata merah">🔴 Mata merah</option>
+          <option value="Pandangan kabur">😵 Pandangan kabur</option>
+          <option value="Sakit kepala">🤕 Sakit kepala</option>
+          <option value="Mata berair">💦 Mata berair</option>
+          <option value="Sensitif cahaya">💡 Sensitif cahaya</option>
+        </select>
+      </div>
+      <div class="sev-row">
+        <label style="font-size:.82rem;font-weight:600;color:var(--text-mid)">Tingkat keparahan:</label>
+        <div class="sev-buttons">
+          <button class="sev-btn active" data-val="1" onclick="setSev(1,this)">1 Ringan</button>
+          <button class="sev-btn" data-val="2" onclick="setSev(2,this)">2</button>
+          <button class="sev-btn" data-val="3" onclick="setSev(3,this)">3 Sedang</button>
+          <button class="sev-btn" data-val="4" onclick="setSev(4,this)">4</button>
+          <button class="sev-btn" data-val="5" onclick="setSev(5,this)">5 Berat</button>
+        </div>
+        <input type="hidden" id="complaintSeverity" value="1">
+      </div>
+      <div class="form-group" style="margin-top:10px">
+        <textarea id="complaintNotes" class="complaint-select" rows="2"
+          placeholder="Catatan tambahan (opsional)..." style="resize:none;width:100%"></textarea>
+      </div>
+      <button id="submitComplaintBtn" class="btn-complaint-submit">
+        <i class="fa-solid fa-paper-plane"></i> Kirim Keluhan
+      </button>
+    </div>
+
+    <!-- ===== WEEKLY CHART ===== -->
+    <div class="chart-section mt-12">
+      <div class="chart-header">
+        <h3>Tren Screen Time</h3>
+        <span class="chart-unit">Menit/Hari</span>
+      </div>
+      <div class="bar-chart tall" id="tracking-bar-chart"></div>
+    </div>
+
+    <!-- ===== STATS GRID ===== -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon-wrap purple">
+          <i class="fa-solid fa-eye"></i>
+        </div>
+        <p class="stat-title">Rata-rata Kedipan</p>
+        <p class="stat-val" id="trk-blink">12x / menit</p>
+        <p class="stat-badge">Normal</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap orange">
+          <i class="fa-solid fa-child"></i>
+        </div>
+        <p class="stat-title">Skor Postur</p>
+        <p class="stat-val" id="trk-posture">78% Baik</p>
+        <p class="stat-badge">Perlu Ditingkatkan</p>
+      </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <div class="tracking-summary-card mt-12">
+      <div class="ts-icon"><i class="fa-solid fa-chart-line"></i></div>
+      <div class="ts-info">
+        <h4>Ringkasan Mingguan</h4>
+        <p id="trk-summary-text">Memuat data...</p>
+      </div>
+    </div>
+
+    <div class="quick-actions" style="margin-top:16px">
+      <button class="btn-primary" onclick="window.location.href='history.html'">
+        <i class="fa-solid fa-clock-rotate-left"></i> Lihat Riwayat Lengkap
+      </button>
+    </div>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Beranda</span></a>
+    <a href="tracking.html"  class="nav-item active"><i class="fa-solid fa-play-circle"></i><span>Tracking</span></a>
+    <a href="statistik.html" class="nav-item"><i class="fa-solid fa-chart-simple"></i><span>Statistik</span></a>
+    <a href="edukasi.html"   class="nav-item"><i class="fa-solid fa-book-open"></i><span>Edukasi</span></a>
+    <a href="profil.html"    class="nav-item"><i class="fa-regular fa-user"></i><span>Profil</span></a>
+  </nav>
+</div>
+
+<script src="shared.js"></script>
+<script src="tracking.js"></script>
+<script>
+// Severity button helper (inline karena kecil)
+function setSev(val, btn) {
+    document.getElementById('complaintSeverity').value = val;
+    document.querySelectorAll('.sev-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+// Show break row saat tracking aktif
+const origStart = startTracking;
+</script>
+</body>
+</html>
