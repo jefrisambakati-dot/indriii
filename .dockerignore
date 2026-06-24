@@ -1,0 +1,21 @@
+# Exclude build artifacts
+target/
+*.jar
+*.war
+
+# Exclude local tools/bundled Maven
+apache-maven-*/
+.mvn/
+mvnw
+mvnw.cmd
+
+# Exclude version control and IDE files
+.git
+.github
+.gitignore
+.vscode/
+.idea/
+*.iml
+
+# Exclude uploads/local user data
+uploads/
